@@ -1,29 +1,31 @@
 <?php
+
+header("Access-Control-Allow-Origin: *");
+
 class Session {
 	private $error = false;
 	private $db;
-	
 	public function __construct($db) {
 		session_start();
 		$this->db = $db;
 	}
 	
-	public function loginAs($login, $password) {
-		$sql = "SELECT id, password FROM users WHERE login=:login";
+	public function loginAs($email, $password) {
+		$sql = "SELECT id, password FROM users WHERE email=:email";
 		$query = $this->db->prepare($sql);
-		$query->bindParam(":login", $login);
+		$query->bindParam(":email", $email);
 		$query->execute();
 		$row = $query->fetch(PDO::FETCH_ASSOC); 
 		if($query->rowCount() > 0) {
 		  if(password_verify($password, $row["password"])) {
-			$_SESSION['login'] = $login;
-			$_SESSION['id'] = $row["id"];
-			$this->error = false;
-		  } else {
-			$this->error = "Niepoprawne hasło dla użytkownika o identyfikatorze: ".$row["id"];
-		  }
+		    $_SESSION['login'] = $login;
+            $_SESSION['id'] = $row["id"];
+            return '{"success": true}';
+          } else {
+            return  '{"error": "Niepoprawne hasło."}';
+          }
 		} else {
-		  $this->error = "Taki użytkownik nie istnieje w bazie danych.";
+		    return  '{"error": "Taki użytkownik nie istnieje w bazie danych."}';
 		}
 	}
 	
