@@ -18,7 +18,7 @@ class Session {
 		$row = $query->fetch(PDO::FETCH_ASSOC); 
 		if($query->rowCount() > 0) {
 		  if(password_verify($password, $row["password"])) {
-		    $_SESSION['login'] = $login;
+		    $_SESSION['login'] = $email;
             $_SESSION['id'] = $row["id"];
             return '{"success": true}';
           } else {
@@ -28,6 +28,20 @@ class Session {
 		    return  '{"error": "Taki użytkownik nie istnieje w bazie danych."}';
 		}
 	}
+
+	public function register($name, $email, $password) {
+    		$sql = "INSERT INTO `users` VALUES (NULL, :name, :password, :email)";
+    		$params = [ ":name" => $name,
+                        ":password" => password_hash($password, PASSWORD_DEFAULT),
+                        ":email" => $email ];
+    		$query = $this->db->prepare($sql);
+    	    $query->execute($params);
+    		if($query->errorCode() != 0) {
+              return  '{"error": "'.$query->errorInfo()[2].'"}';
+    		} else {
+    		  return '{"success": true}';
+    		}
+    	}
 	
 	public function getLogin() {
 		if($this->isLogged())

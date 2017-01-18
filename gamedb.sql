@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 17, 2017 at 08:20 PM
+-- Generation Time: Jan 18, 2017 at 08:41 PM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -47,18 +47,18 @@ INSERT INTO `score` (`game_id`, `game_score`, `user_id`) VALUES
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `login` varchar(20) NOT NULL,
+  `name` varchar(20) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `mail` varchar(100) NOT NULL
+  `email` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `login`, `password`, `mail`) VALUES
-(1, 'admin', '$2y$10$0hrjeNRXS01tzsTzPJi2Yu1G7Ggo6RoJ3/88M27Gg.AX8jDVjRMje', 'test@test.pl'),
-(2, 'test', '$2y$10$0hrjeNRXS01tzsTzPJi2Yu1G7Ggo6RoJ3/88M27Gg.AX8jDVjRMje', 'test@test.pl');
+INSERT INTO `users` (`id`, `name`, `password`, `email`) VALUES
+(1, 'admin', '$2y$10$0hrjeNRXS01tzsTzPJi2Yu1G7Ggo6RoJ3/88M27Gg.AX8jDVjRMje', 'admin@test.pl'),
+(2, 'test', '$2y$10$eAQ0B1UD1ps6729sFMr6CewqFbNrFKsRyDKdImp/iQEfkHD0TpL2S', 'test@test.pl');
 
 --
 -- Indexes for dumped tables
@@ -76,7 +76,7 @@ ALTER TABLE `score`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `login` (`login`);
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- AUTO_INCREMENT for dumped tables
