@@ -30,6 +30,22 @@ class Session {
 	}
 
 	public function register($name, $email, $password) {
+			$islogin = "SELECT 'id' FROM 'users' WHERE name =:name";
+			$query = $this->db->prepare($rislogin );
+			$query->bindParam(":name", $name);
+			$query->execute();
+			if($islogin ->num_rows != 0) {
+				 return '{"error": "Login jest zajęty"}';
+			}
+			
+			$ismail = "SELECT 'id' FROM 'users' WHERE email =:email";
+			$query = $this->db->prepare($ismail);
+			$query->bindParam(":email", $email);
+			$query->execute();
+			if($ismail->num_rows != 0) {
+				 return '{"error": "E-mail jest już zarejestrowany"}';
+			}
+
     		$sql = "INSERT INTO `users` VALUES (NULL, :name, :password, :email)";
     		$params = [ ":name" => $name,
                         ":password" => password_hash($password, PASSWORD_DEFAULT),
