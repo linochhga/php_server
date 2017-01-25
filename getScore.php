@@ -9,7 +9,8 @@ $sql = "SELECT `name`, `score` FROM `users`
 		ON (`users`.`id`=`scores`.`user`)
 		WHERE `score` IS NOT NULL
 		ORDER BY `score`
-		LIMIT 10;";
+		LIMIT 5;";
+		//ORDER BY column_name ASC|DESC;
 		//WHERE `user`=1 z tym beda nie wszystkie where `score`!=NULL
 $query = $db->prepare($sql);
 $query->execute();
